@@ -33,29 +33,46 @@ const displayedButtons = document.querySelectorAll(".number, .operator");
 const display = document.querySelector("#display");
 displayedButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const displayText = display.textContent
-    const lastInput = displayText.slice(-1)
-    const currentInputClass = button.className
-    const buttonText = button.textContent === ' x ' ? ' * ' : button.textContent
-    if (isDecimalOrOperator(lastInput) && currentInputClass === 'operator'){
-      const noDecimal = displayText.slice(0, -1)
-      display.textContent = noDecimal + buttonText
+    const displayText = display.textContent;
+    const lastInput = displayText.slice(-1);
+    const currentInputClass = button.className;
+    const buttonText =
+      button.textContent === " x " ? " * " : button.textContent;
+    if (isDecimalOrOperator(lastInput) && currentInputClass === "operator") {
+      const noDecimal = displayText.slice(0, -1);
+      display.textContent = noDecimal + buttonText;
     } else {
       display.textContent += buttonText;
     }
   });
 });
 
-function isDecimalOrOperator(input){
-  operators = /[+\–*/.]/
-  return input.match(operators)
+function isDecimalOrOperator(input) {
+  operators = /[+\–*/.]/;
+  return input.match(operators);
 }
 
 const clearButton = document.querySelector("#clear-button");
 clearButton.addEventListener("click", () => (display.textContent = ""));
 
-const deleteButton = document.querySelector('#delete-button')
-deleteButton.addEventListener('click', () => {
-  display.textContent = display.textContent.slice(0, -1)
-})
+const deleteButton = document.querySelector("#delete-button");
+deleteButton.addEventListener("click", () => {
+  display.textContent = display.textContent.slice(0, -1);
+});
 
+// This function adds a negative sign before the last displayed number if positive,
+// removes it if negative
+
+const toggleNegativeBtn = document.querySelector("#toggle-negative");
+toggleNegativeBtn.addEventListener("click", () =>
+  toggleNegative(display.textContent)
+);
+
+function toggleNegative(displayString) {
+  let dispArray = displayString.split(" ").filter((n) => n);
+  const last_element = dispArray.slice(-1);
+  isNaN(last_element)
+    ? dispArray.push(" ")
+    : (dispArray[dispArray.length - 1] = last_element * -1);
+  display.textContent = dispArray.join(" ");
+}
