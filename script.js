@@ -54,5 +54,8 @@ function isDecimalOrOperator(input){
 const clearButton = document.querySelector("#clear-button");
 clearButton.addEventListener("click", () => (display.textContent = ""));
 
-
+const deleteButton = document.querySelector('#delete-button')
+deleteButton.addEventListener('click', () => {
+  display.textContent = display.textContent.slice(0, -1)
+})
 
