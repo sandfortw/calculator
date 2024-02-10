@@ -1,3 +1,10 @@
+const displayedButtons = document.querySelectorAll(".number, .operator");
+const display = document.querySelector("#display");
+const clearButton = document.querySelector("#clear-button");
+const deleteButton = document.querySelector("#delete-button");
+const toggleNegativeBtn = document.querySelector("#toggle-negative");
+const equalButton = document.querySelector("#equal-button");
+
 function add(num1, num2) {
   return num1 + num2;
 }
@@ -20,19 +27,18 @@ function operate(operator, num1, num2) {
   switch (operator) {
     case "+":
       return add(num1, num2);
-    case "-":
+    case "–":
       return subtract(num1, num2);
     case "*":
       return multiply(num1, num2);
     case "/":
+      if (num2 === 0) alert("Hey now...");
       return divide(num1, num2);
   }
 }
 
 // Number buttons include '.' key
 //MINUS SYMBOLS ARE en-dashes! i.e. '–' not '-' (a hyphen)
-const displayedButtons = document.querySelectorAll(".number, .operator");
-const display = document.querySelector("#display");
 displayedButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const displayText = display.textContent;
@@ -54,10 +60,8 @@ function isDecimalOrOperator(input) {
   return input.match(operators);
 }
 
-const clearButton = document.querySelector("#clear-button");
 clearButton.addEventListener("click", () => (display.textContent = ""));
 
-const deleteButton = document.querySelector("#delete-button");
 deleteButton.addEventListener("click", () => {
   display.textContent = display.textContent.slice(0, -1);
 });
@@ -65,7 +69,6 @@ deleteButton.addEventListener("click", () => {
 // This function adds a negative sign before the last displayed number if positive,
 // removes it if negative
 
-const toggleNegativeBtn = document.querySelector("#toggle-negative");
 toggleNegativeBtn.addEventListener("click", () =>
   toggleNegative(display.textContent)
 );
@@ -79,15 +82,15 @@ function toggleNegative(displayString) {
   display.textContent = dispArray.join(" ");
 }
 
- const equalButton = document.querySelector('#equal-button')
-
- equalButton.addEventListener('click', () => {
-  let array = display.textContent.split(" ");
-  let accumulator = array.shift()
-  while(array.length > 1){
-    let operator = array.shift();
-    let nextNum = array.shift();
-    accumulator = operate(operator, accumulator, nextNum)
+equalButton.addEventListener("click", () => {
+  let array = display.textContent.split(" ").filter((n) => n);
+  if (!isNaN(array.slice(-1))) {
+    let accumulator = array.shift();
+    while (array.length > 1) {
+      let operator = array.shift();
+      let nextNum = array.shift();
+      accumulator = operate(operator, accumulator, nextNum);
+    }
+    display.textContent = Math.round(accumulator * 100) / 100;
   }
-  display.textContent = accumulator
- });
+});
