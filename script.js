@@ -52,7 +52,7 @@ displayedButtons.forEach((button) => {
     const currentInputClass = button.className;
     const buttonText =
       button.textContent === " x " ? " * " : button.textContent;
-    const lastInputDecimalorOperator = isDecimalOrOperator(lastInput);
+    if (lastInput.slice(-1) === "." && buttonText === ".") return void(0); 
     if (isDecimalOrOperator(lastInput) && currentInputClass === "operator") {
       if (lastInput === ".") {
         const noDecimal = displayText.slice(0, -1);
