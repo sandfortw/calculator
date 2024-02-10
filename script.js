@@ -15,6 +15,8 @@ function divide(num1, num2) {
 }
 
 function operate(operator, num1, num2) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
   switch (operator) {
     case "+":
       return add(num1, num2);
@@ -76,3 +78,16 @@ function toggleNegative(displayString) {
     : (dispArray[dispArray.length - 1] = last_element * -1);
   display.textContent = dispArray.join(" ");
 }
+
+ const equalButton = document.querySelector('#equal-button')
+
+ equalButton.addEventListener('click', () => {
+  let array = display.textContent.split(" ");
+  let accumulator = array.shift()
+  while(array.length > 1){
+    let operator = array.shift();
+    let nextNum = array.shift();
+    accumulator = operate(operator, accumulator, nextNum)
+  }
+  display.textContent = accumulator
+ });
