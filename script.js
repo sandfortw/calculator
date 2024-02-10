@@ -42,13 +42,19 @@ function operate(operator, num1, num2) {
 displayedButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const displayText = display.textContent;
-    const lastInput = displayText.slice(-1);
+    const lastInput = displayText === "" ? "" : displayText.split(" ").filter(n => n).slice(-1)[0];
     const currentInputClass = button.className;
     const buttonText =
       button.textContent === " x " ? " * " : button.textContent;
+    const lastInputDecimalorOperator = isDecimalOrOperator(lastInput)
     if (isDecimalOrOperator(lastInput) && currentInputClass === "operator") {
-      const noDecimal = displayText.slice(0, -1);
-      display.textContent = noDecimal + buttonText;
+      if(lastInput === '.') {
+        const noDecimal = displayText.slice(0, -1);
+        display.textContent = noDecimal + buttonText;
+      } else {
+        const removedOperator = displayText.slice(0, -3);
+        display.textContent = removedOperator + buttonText;
+      }
     } else {
       display.textContent += buttonText;
     }
@@ -57,7 +63,7 @@ displayedButtons.forEach((button) => {
 
 function isDecimalOrOperator(input) {
   operators = /[+\–*/.]/;
-  return input.match(operators);
+  return input.match(operators) ? true : false;
 }
 
 clearButton.addEventListener("click", () => (display.textContent = ""));
