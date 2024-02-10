@@ -42,13 +42,19 @@ function operate(operator, num1, num2) {
 displayedButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const displayText = display.textContent;
-    const lastInput = displayText === "" ? "" : displayText.split(" ").filter(n => n).slice(-1)[0];
+    const lastInput =
+      displayText === ""
+        ? ""
+        : displayText
+            .split(" ")
+            .filter((n) => n)
+            .slice(-1)[0];
     const currentInputClass = button.className;
     const buttonText =
       button.textContent === " x " ? " * " : button.textContent;
-    const lastInputDecimalorOperator = isDecimalOrOperator(lastInput)
+    const lastInputDecimalorOperator = isDecimalOrOperator(lastInput);
     if (isDecimalOrOperator(lastInput) && currentInputClass === "operator") {
-      if(lastInput === '.') {
+      if (lastInput === ".") {
         const noDecimal = displayText.slice(0, -1);
         display.textContent = noDecimal + buttonText;
       } else {
@@ -89,7 +95,7 @@ function toggleNegative(displayString) {
 }
 
 equalButton.addEventListener("click", () => {
-  if(display.textContent === "") return void(0)
+  if (display.textContent === "") return void 0;
   let array = display.textContent.split(" ").filter((n) => n);
   if (!isNaN(array.slice(-1))) {
     let accumulator = array.shift();
