@@ -89,6 +89,7 @@ function toggleNegative(displayString) {
 }
 
 equalButton.addEventListener("click", () => {
+  if(display.textContent === "") return void(0)
   let array = display.textContent.split(" ").filter((n) => n);
   if (!isNaN(array.slice(-1))) {
     let accumulator = array.shift();
